@@ -2,6 +2,7 @@
 using MortgageCalculator.Core.Model;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,19 +14,23 @@ namespace MortgageCalculator.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly bool Ready = false;
         public MainWindow()
         {
             InitializeComponent();
             SetLanguageDictionary();
+            Ready = true;
+            Update();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Calculate()
         {
+            if (!Ready) return;
             string tag = ((ComboBoxItem)cb_paymentInterval.SelectedItem).Tag.ToString() ?? "";
             bool tagParsed = int.TryParse(tag, out int paymentInterval);
             if (!tagParsed)
             {
-                tb_result.Text = string.Empty;
+                tb_recurringAmount.Text = string.Empty;
                 return;
             }
 
@@ -37,8 +42,14 @@ namespace MortgageCalculator.Wpf
                 LoanTermYears = (int)nb_loanTerm.Value,
                 Precision = 2
             };
-            decimal result = Payment.CalculateOne(mortgage);
-            tb_result.Text = $"{result}";
+
+            decimal recurringAmount = Payment.GetRecurringAmount(mortgage);
+            decimal interestAmount = Payment.GetInterestAmount(mortgage);
+            decimal totalAmount = mortgage.HomePrice + interestAmount;
+
+            tb_recurringAmount.Text = $"{recurringAmount:G29}";
+            tb_interestAmount.Text = $"{interestAmount:G29}";
+            tb_totalAmount.Text = $"{totalAmount:G29}";
         }
 
         private void SetLanguageDictionary()
@@ -54,12 +65,14 @@ namespace MortgageCalculator.Wpf
                 }
             };
             this.Resources.MergedDictionaries.Add(dict);
-            cb_language.SelectedValue = culture;
+            ComboBoxItem? selectedItem = cb_language.Items.Cast<ComboBoxItem>().FirstOrDefault(e => e.Tag.ToString() == culture);
+            cb_language.SelectedValue = selectedItem != null ? culture : "en-US";
         }
 
         private void SetLanguage(string isoLanguageCode)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(isoLanguageCode);
+            SetLanguageDictionary();
         }
 
         private void ChangeLanguage(object sender, SelectionChangedEventArgs e)
@@ -67,13 +80,21 @@ namespace MortgageCalculator.Wpf
             if (sender is not ComboBox comboBox) return;
             string locale = (string)((ComboBoxItem)comboBox.SelectedItem).Tag ?? "en-US";
             SetLanguage(locale);
-            SetLanguageDictionary();
         }
 
-        private void SymbolIcon_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Update(object? sender = null, object? e = null)
         {
-            MessageBox.Show("click click");
-            new WPFUI.Controls.MessageBox(); // temp test
+            try
+            {
+                Calculate();
+                if (tb_error != null) tb_error.Text = string.Empty;
+                if (btn_calculate != null) btn_calculate.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                tb_error.Text = ex.Message;
+                btn_calculate.IsEnabled = false;
+            }
         }
     }
 }

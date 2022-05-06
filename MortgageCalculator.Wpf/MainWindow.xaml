@@ -8,7 +8,7 @@
         Style="{StaticResource UiWindow}"
         mc:Ignorable="d"
         Title="Mortgage Calculator" WindowStartupLocation="CenterScreen"
-        Height="350" Width="350" MinWidth="350" MinHeight="350">
+        Height="500" Width="350" MinWidth="350" MinHeight="500">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -61,19 +61,19 @@
                 <TextBlock Grid.ColumnSpan="3" Text="{DynamicResource title}" HorizontalAlignment="Center" FontSize="15" Margin="5" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource lbl_homePrice}"/>
-                <wpfui:NumberBox x:Name="nb_homePrice" Grid.Row="1" Grid.Column="1" Value="100000"/>
+                <wpfui:NumberBox x:Name="nb_homePrice" Grid.Row="1" Grid.Column="1" Min="0" Max="100000000" Value="100000" SelectionChanged="Update"/>
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource lbl_interestRate}"/>
-                <wpfui:NumberBox x:Name="nb_interestRate" Grid.Row="2" Grid.Column="1" Value="10"/>
+                <wpfui:NumberBox x:Name="nb_interestRate" Grid.Row="2" Grid.Column="1" Min="1" Max="100" Value="10" SelectionChanged="Update"/>
                 <TextBlock Grid.Row="2" Grid.Column="2" Text="{DynamicResource unt_interestRate}" Style="{StaticResource LabelUnit}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource lbl_loanTerm}"/>
-                <wpfui:NumberBox x:Name="nb_loanTerm" Grid.Row="3" Grid.Column="1" Value="10"/>
+                <wpfui:NumberBox x:Name="nb_loanTerm" Grid.Row="3" Grid.Column="1" Min="1" Max="100" Value="10" SelectionChanged="Update"/>
                 <TextBlock Grid.Row="3" Grid.Column="2" Text="{DynamicResource unt_loanTerm}" Style="{StaticResource LabelUnit}"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource lbl_paymentInterval}"/>
-                <ComboBox x:Name="cb_paymentInterval" SelectedIndex="0" Grid.Row="4" Grid.Column="1">
+                <ComboBox x:Name="cb_paymentInterval" SelectedIndex="0" Grid.Row="4" Grid.Column="1" SelectionChanged="Update">
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_monthly}" Tag="12"/>
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_yearly}" Tag="1"/>
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_bianually}" Tag="2"/>
@@ -82,18 +82,33 @@
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_every2months}" Tag="6"/>
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_daily}" Tag="365"/>
                 </ComboBox>
-                <wpfui:Button Grid.Row="5" Grid.ColumnSpan="3" Content="{DynamicResource btn_calculate}" Margin="5" Click="Button_Click"/>
+                <wpfui:Button x:Name="btn_calculate" Grid.Row="5" Grid.ColumnSpan="3" Content="{DynamicResource btn_calculate}" Margin="5" Click="Update"/>
                 <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{DynamicResource lbl_paymentAmount}"/>
-                    <wpfui:TextBox x:Name="tb_result" Grid.Column="1" IsReadOnly="True" Width="100"/>
-                    <TextBlock Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource lbl_paymentAmount}"/>
+                    <wpfui:TextBox x:Name="tb_recurringAmount" Grid.Row="0" Grid.Column="1" IsReadOnly="True" Width="100"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource lbl_interestAmount}"/>
+                    <wpfui:TextBox x:Name="tb_interestAmount" Grid.Row="1" Grid.Column="1" IsReadOnly="True" Width="100"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource lbl_totalAmount}"/>
+                    <wpfui:TextBox x:Name="tb_totalAmount" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Width="100"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
                 </Grid>
             </Grid>
+            <TextBlock x:Name="tb_error" Grid.Row="2" Grid.ColumnSpan="2" Foreground="Red" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5"/>
             <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="David Langr" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
             <ComboBox x:Name="cb_language" SelectedValuePath="Tag" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" SelectionChanged="ChangeLanguage">
                 <ComboBoxItem Content="English" Tag="en-US"/>

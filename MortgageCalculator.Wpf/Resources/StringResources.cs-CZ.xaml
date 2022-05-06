@@ -7,6 +7,8 @@
     <system:String x:Key="lbl_loanTerm">Délka úvěru:</system:String>
     <system:String x:Key="lbl_paymentInterval">Interval plateb:</system:String>
     <system:String x:Key="lbl_paymentAmount">Velikost splátky:</system:String>
+    <system:String x:Key="lbl_interestAmount">Úrok:</system:String>
+    <system:String x:Key="lbl_totalAmount">Celkem zaplaceno:</system:String>
     
     <system:String x:Key="unt_homePrice">Kč</system:String>
     <system:String x:Key="unt_interestRate">%</system:String>

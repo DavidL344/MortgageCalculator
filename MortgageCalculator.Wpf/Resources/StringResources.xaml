@@ -7,6 +7,8 @@
     <system:String x:Key="lbl_loanTerm">Loan Term:</system:String>
     <system:String x:Key="lbl_paymentInterval">Payment Interval:</system:String>
     <system:String x:Key="lbl_paymentAmount">Payment Amount:</system:String>
+    <system:String x:Key="lbl_interestAmount">Interest Amount:</system:String>
+    <system:String x:Key="lbl_totalAmount">Total Amount:</system:String>
     
     <system:String x:Key="unt_homePrice">CZK</system:String>
     <system:String x:Key="unt_interestRate">%</system:String>

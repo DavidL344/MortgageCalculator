@@ -26,7 +26,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = _decimalPrecision
             };
-            decimal onePayment = Payment.CalculateOne(mortgage);
+            decimal onePayment = Payment.GetRecurringAmount(mortgage);
             Assert.AreEqual(_expectedResult, onePayment);
         }
 
@@ -41,7 +41,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = _decimalPrecision
             };
-            decimal onePayment = Payment.CalculateOne(mortgage);
+            decimal onePayment = Payment.GetRecurringAmount(mortgage);
             Assert.AreEqual(0, onePayment);
         }
 
@@ -57,7 +57,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = _decimalPrecision
             };
-            decimal onePayment = Payment.CalculateOne(mortgage);
+            decimal onePayment = Payment.GetRecurringAmount(mortgage);
             Assert.AreEqual(_expectedResult, onePayment);
         }
 
@@ -73,7 +73,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = _decimalPrecision
             };
-            Payment.CalculateOne(mortgage);
+            Payment.GetRecurringAmount(mortgage);
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = 0,
                 Precision = _decimalPrecision
             };
-            Payment.CalculateOne(mortgage);
+            Payment.GetRecurringAmount(mortgage);
         }
 
         [TestMethod]
@@ -102,12 +102,12 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = 0
             };
-            decimal onePayment = Payment.CalculateOne(mortgage);
+            decimal onePayment = Payment.GetRecurringAmount(mortgage);
             Assert.AreEqual(Math.Round(_expectedResult, 0), onePayment);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NegativePrecisionException), "An invalid decimal precision was allowed!")]
+        [ExpectedException(typeof(InvalidPrecisionException), "An invalid decimal precision was allowed!")]
         public void NegativePrecision()
         {
             Mortgage mortgage = new()
@@ -118,7 +118,7 @@ namespace MortgageCalculator.Core.Tests
                 InterestPaymentInterval = _interestPaymentInterval,
                 Precision = -1
             };
-            Payment.CalculateOne(mortgage);
+            Payment.GetRecurringAmount(mortgage);
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="title">Mortgage Calculator</system:String>
+    <system:String x:Key="lbl_homePrice">Home Price:</system:String>
+    <system:String x:Key="lbl_interestRate">Interest Rate:</system:String>
+    <system:String x:Key="lbl_loanTerm">Loan Term:</system:String>
+    <system:String x:Key="lbl_paymentInterval">Payment Interval:</system:String>
+    <system:String x:Key="lbl_paymentAmount">Payment Amount:</system:String>
+    
+    <system:String x:Key="unt_homePrice">CZK</system:String>
+    <system:String x:Key="unt_interestRate">%</system:String>
+    <system:String x:Key="unt_loanTerm">year/s</system:String>
+
+    <system:String x:Key="cbi_paymentInterval_monthly">Monthly</system:String>
+    <system:String x:Key="cbi_paymentInterval_yearly">Yearly</system:String>
+    <system:String x:Key="cbi_paymentInterval_bianually">Bianually</system:String>
+    <system:String x:Key="cbi_paymentInterval_quarterly">Quarterly</system:String>
+    <system:String x:Key="cbi_paymentInterval_every4months">Every 4 months</system:String>
+    <system:String x:Key="cbi_paymentInterval_every2months">Every 2 months</system:String>
+    <system:String x:Key="cbi_paymentInterval_daily">Daily</system:String>
+
+    <system:String x:Key="btn_calculate">Calculate</system:String>
+</ResourceDictionary>

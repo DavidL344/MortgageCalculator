@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="title">Hypoteční kalkulačka</system:String>
+    <system:String x:Key="lbl_homePrice">Půjčená částka:</system:String>
+    <system:String x:Key="lbl_interestRate">Úroková sazba:</system:String>
+    <system:String x:Key="lbl_loanTerm">Délka úvěru:</system:String>
+    <system:String x:Key="lbl_paymentInterval">Interval plateb:</system:String>
+    <system:String x:Key="lbl_paymentAmount">Velikost splátky:</system:String>
+    
+    <system:String x:Key="unt_homePrice">Kč</system:String>
+    <system:String x:Key="unt_interestRate">%</system:String>
+    <system:String x:Key="unt_loanTerm">let</system:String>
+
+    <system:String x:Key="cbi_paymentInterval_monthly">Měsíční</system:String>
+    <system:String x:Key="cbi_paymentInterval_yearly">Roční</system:String>
+    <system:String x:Key="cbi_paymentInterval_bianually">Semestrální</system:String>
+    <system:String x:Key="cbi_paymentInterval_quarterly">Kvartální</system:String>
+    <system:String x:Key="cbi_paymentInterval_every4months">Každé 4 měsíce</system:String>
+    <system:String x:Key="cbi_paymentInterval_every2months">Každé 2 měsíce</system:String>
+    <system:String x:Key="cbi_paymentInterval_daily">Denní</system:String>
+
+    <system:String x:Key="btn_calculate">Vypočítat</system:String>
+</ResourceDictionary>

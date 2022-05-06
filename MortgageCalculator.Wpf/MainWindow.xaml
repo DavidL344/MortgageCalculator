@@ -1,0 +1,104 @@
+﻿<Window x:Class="MortgageCalculator.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MortgageCalculator.Wpf"
+        xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+        Style="{StaticResource UiWindow}"
+        mc:Ignorable="d"
+        Title="Mortgage Calculator" WindowStartupLocation="CenterScreen"
+        Height="350" Width="350" MinWidth="350" MinHeight="350">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5, 0"/>
+        </Style>
+        <Style x:Key="LabelUnit" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5, 0"/>
+        </Style>
+        <Style TargetType="wpfui:NumberBox" BasedOn="{StaticResource {x:Type wpfui:NumberBox}}">
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Width" Value="150"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <wpfui:TitleBar Grid.Row="0" ForceShutdown="True"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="3" Text="{DynamicResource title}" HorizontalAlignment="Center" FontSize="15" Margin="5" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource lbl_homePrice}"/>
+                <wpfui:NumberBox x:Name="nb_homePrice" Grid.Row="1" Grid.Column="1" Value="100000"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource lbl_interestRate}"/>
+                <wpfui:NumberBox x:Name="nb_interestRate" Grid.Row="2" Grid.Column="1" Value="10"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{DynamicResource unt_interestRate}" Style="{StaticResource LabelUnit}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource lbl_loanTerm}"/>
+                <wpfui:NumberBox x:Name="nb_loanTerm" Grid.Row="3" Grid.Column="1" Value="10"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="{DynamicResource unt_loanTerm}" Style="{StaticResource LabelUnit}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource lbl_paymentInterval}"/>
+                <ComboBox x:Name="cb_paymentInterval" SelectedIndex="0" Grid.Row="4" Grid.Column="1">
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_monthly}" Tag="12"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_yearly}" Tag="1"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_bianually}" Tag="2"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_quarterly}" Tag="4"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_every4months}" Tag="3"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_every2months}" Tag="6"/>
+                    <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_daily}" Tag="365"/>
+                </ComboBox>
+                <wpfui:Button Grid.Row="5" Grid.ColumnSpan="3" Content="{DynamicResource btn_calculate}" Margin="5" Click="Button_Click"/>
+                <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{DynamicResource lbl_paymentAmount}"/>
+                    <wpfui:TextBox x:Name="tb_result" Grid.Column="1" IsReadOnly="True" Width="100"/>
+                    <TextBlock Grid.Column="2" Text="{DynamicResource unt_homePrice}" Style="{StaticResource LabelUnit}"/>
+                </Grid>
+            </Grid>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="David Langr" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
+            <ComboBox x:Name="cb_language" SelectedValuePath="Tag" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" SelectionChanged="ChangeLanguage">
+                <ComboBoxItem Content="English" Tag="en-US"/>
+                <ComboBoxItem Content="Čeština" Tag="cs-CZ"/>
+            </ComboBox>
+        </Grid>
+    </Grid>
+</Window>

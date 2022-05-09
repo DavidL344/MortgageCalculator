@@ -82,7 +82,7 @@
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_every2months}" Tag="6"/>
                     <ComboBoxItem Content="{DynamicResource cbi_paymentInterval_daily}" Tag="365"/>
                 </ComboBox>
-                <wpfui:Button x:Name="btn_calculate" Grid.Row="5" Grid.ColumnSpan="3" Content="{DynamicResource btn_calculate}" Margin="5" Click="Update"/>
+                <wpfui:Button x:Name="btn_calculate" Grid.Row="5" Grid.ColumnSpan="3" Content="{DynamicResource btn_showInstallmentPlan}" Margin="5" Click="ShowInstallmentPlan"/>
                 <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

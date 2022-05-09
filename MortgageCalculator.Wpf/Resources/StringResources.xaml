@@ -22,5 +22,10 @@
     <system:String x:Key="cbi_paymentInterval_every2months">Every 2 months</system:String>
     <system:String x:Key="cbi_paymentInterval_daily">Daily</system:String>
 
-    <system:String x:Key="btn_calculate">Calculate</system:String>
+    <system:String x:Key="btn_showInstallmentPlan">Show Installment Plan</system:String>
+    <system:String x:Key="dg_installmentPlan_alreadyPaid">Already Paid</system:String>
+    <system:String x:Key="dg_installmentPlan_recurringAmount">Recurring Amount</system:String>
+    <system:String x:Key="dg_installmentPlan_interest">Interest</system:String>
+    <system:String x:Key="dg_installmentPlan_depreciation">Depreciation</system:String>
+    <system:String x:Key="dg_installmentPlan_remainingAmount">Remaining Amount</system:String>
 </ResourceDictionary>

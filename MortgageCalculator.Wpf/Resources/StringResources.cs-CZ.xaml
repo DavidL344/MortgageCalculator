@@ -22,5 +22,10 @@
     <system:String x:Key="cbi_paymentInterval_every2months">Každé 2 měsíce</system:String>
     <system:String x:Key="cbi_paymentInterval_daily">Denní</system:String>
 
-    <system:String x:Key="btn_calculate">Vypočítat</system:String>
+    <system:String x:Key="btn_showInstallmentPlan">Zobrazit splátkový kalendář</system:String>
+    <system:String x:Key="dg_installmentPlan_alreadyPaid">Již splaceno</system:String>
+    <system:String x:Key="dg_installmentPlan_recurringAmount">Velikost splátky</system:String>
+    <system:String x:Key="dg_installmentPlan_interest">Úrok</system:String>
+    <system:String x:Key="dg_installmentPlan_depreciation">Úmor</system:String>
+    <system:String x:Key="dg_installmentPlan_remainingAmount">Ke splacení</system:String>
 </ResourceDictionary>

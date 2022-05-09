@@ -1,6 +1,7 @@
 ﻿using MortgageCalculator.Core;
 using MortgageCalculator.Core.Model;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -15,6 +16,31 @@ namespace MortgageCalculator.Wpf
     public partial class MainWindow : Window
     {
         private readonly bool Ready = false;
+        private Mortgage Mortgage
+        {
+            get
+            {
+                string tag = ((ComboBoxItem)cb_paymentInterval.SelectedItem).Tag.ToString() ?? "";
+                bool tagParsed = int.TryParse(tag, out int paymentInterval);
+                if (!tagParsed) throw new Exception("The payment interval couldn't be parsed!");
+
+                Mortgage updatedMortgage = new()
+                {
+                    HomePrice = (decimal)nb_homePrice.Value,
+                    InterestPaymentInterval = paymentInterval,
+                    InterestRate = (decimal)nb_interestRate.Value,
+                    LoanTermYears = (int)nb_loanTerm.Value,
+                    Precision = 2
+                };
+
+                bool isUninitialized = _mortgage.Equals(default(Mortgage));
+                bool hasSameValues = _mortgage.Equals(updatedMortgage);
+                if (isUninitialized || !hasSameValues) _mortgage = updatedMortgage;
+                return _mortgage;
+            }
+        }
+        private Mortgage _mortgage;
+        private List<InstallmentPlanEntry> _installmentPlan = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -26,26 +52,10 @@ namespace MortgageCalculator.Wpf
         public void Calculate()
         {
             if (!Ready) return;
-            string tag = ((ComboBoxItem)cb_paymentInterval.SelectedItem).Tag.ToString() ?? "";
-            bool tagParsed = int.TryParse(tag, out int paymentInterval);
-            if (!tagParsed)
-            {
-                tb_recurringAmount.Text = string.Empty;
-                return;
-            }
 
-            Mortgage mortgage = new()
-            {
-                HomePrice = (decimal)nb_homePrice.Value,
-                InterestPaymentInterval = paymentInterval,
-                InterestRate = (decimal)nb_interestRate.Value,
-                LoanTermYears = (int)nb_loanTerm.Value,
-                Precision = 2
-            };
-
-            decimal recurringAmount = Payment.GetRecurringAmount(mortgage);
-            decimal interestAmount = Payment.GetInterestAmount(mortgage);
-            decimal totalAmount = mortgage.HomePrice + interestAmount;
+            decimal recurringAmount = Payment.GetRecurringAmount(Mortgage);
+            decimal interestAmount = Payment.GetInterestAmount(Mortgage);
+            decimal totalAmount = Mortgage.HomePrice + interestAmount;
 
             tb_recurringAmount.Text = $"{recurringAmount:G29}";
             tb_interestAmount.Text = $"{interestAmount:G29}";
@@ -95,6 +105,14 @@ namespace MortgageCalculator.Wpf
                 tb_error.Text = ex.Message;
                 btn_calculate.IsEnabled = false;
             }
+        }
+
+        private void ShowInstallmentPlan(object sender, RoutedEventArgs e)
+        {
+            Mortgage mortgage = Mortgage;
+            mortgage.Precision = 0;
+            _installmentPlan = Payment.GetInstallmentPlanEntries(mortgage);
+            new InstallmentPlanWindow(_installmentPlan).Show();
         }
     }
 }

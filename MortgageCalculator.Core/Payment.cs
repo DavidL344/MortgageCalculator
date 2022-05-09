@@ -27,6 +27,66 @@ namespace MortgageCalculator.Core
             return GetRecurringAmount(mortgage) * payThisManyTimes - mortgage.HomePrice;
         }
 
+        public static InstallmentPlan GetInstallmentPlan(Mortgage mortgage)
+        {
+            decimal recurringAmount = GetRecurringAmount(mortgage);
+            decimal interestRate = mortgage.InterestRate / 100;
+            decimal i_m = interestRate / mortgage.InterestPaymentInterval;
+
+            decimal toRepay = mortgage.HomePrice;
+            List<decimal> toRepayList = new();
+            List<decimal> interestList = new();
+            List<decimal> depreciationList = new();
+            while (toRepay > 0)
+            {
+                decimal interest = i_m * toRepay;
+                decimal depreciation = recurringAmount - interest;
+
+                toRepayList.Add(toRepay);
+                interestList.Add(interest);
+                depreciationList.Add(depreciation);
+
+                toRepay -= depreciation;
+            }
+
+            return new InstallmentPlan()
+            {
+                RecurringAmount = GetRecurringAmount(mortgage),
+                Interest = interestList.ToArray(),
+                Depreciation = depreciationList.ToArray(),
+                ToRepay = toRepayList.ToArray()
+            };
+        }
+
+        public static List<InstallmentPlanEntry> GetInstallmentPlanEntries(Mortgage mortgage)
+        {
+            decimal recurringAmount = GetRecurringAmount(mortgage);
+            decimal interestRate = mortgage.InterestRate / 100;
+            decimal i_m = interestRate / mortgage.InterestPaymentInterval;
+
+            decimal toRepay = mortgage.HomePrice;
+            int alreadyPaid = 0;
+
+            List<InstallmentPlanEntry> installmentPlanEntries = new();
+            while (toRepay > 0)
+            {
+                alreadyPaid++;
+                decimal interest = i_m * toRepay;
+                decimal depreciation = recurringAmount - interest;
+                installmentPlanEntries.Add(new InstallmentPlanEntry()
+                {
+                    AlreadyPaid = alreadyPaid,
+                    RecurringAmount = Math.Round(recurringAmount, mortgage.Precision),
+                    ToRepay = Math.Round(toRepay, mortgage.Precision),
+                    Interest = Math.Round(interest, mortgage.Precision),
+                    Depreciation = Math.Round(depreciation, mortgage.Precision)
+                });
+                toRepay -= depreciation;
+            }
+
+            return installmentPlanEntries;
+        }
+
         public static void Verify(Mortgage mortgage)
         {
             if (mortgage.HomePrice < 0 || mortgage.HomePrice > 100000000) throw new InvalidHomePriceException("Invalid home price!");

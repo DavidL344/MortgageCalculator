@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Csv.Csharp" Version="1.0.3" />
     <PackageReference Include="WPF-UI" Version="1.2.7" />
   </ItemGroup>
 

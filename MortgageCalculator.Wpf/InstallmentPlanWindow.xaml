@@ -8,11 +8,12 @@
         Style="{StaticResource UiWindow}"
         mc:Ignorable="d"
         Title="InstallmentPlanWindow" WindowStartupLocation="CenterScreen"
-        Height="500" Width="520" MinWidth="520" MinHeight="500" MaxWidth="520">
+        Height="520" Width="520" MinWidth="520" MinHeight="520" MaxWidth="520">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <wpfui:TitleBar Grid.Row="0" ForceShutdown="False"/>
@@ -25,5 +26,6 @@
                 <DataGridTextColumn Header="Remaining Amount" Binding="{Binding ToRepay}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Row="2" Content="Save to File..." Margin="5" Click="SaveToFileButtonClicked"/>
     </Grid>
 </Window>

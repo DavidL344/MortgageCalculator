@@ -112,7 +112,7 @@ namespace MortgageCalculator.Wpf
             Mortgage mortgage = Mortgage;
             mortgage.Precision = 0;
             _installmentPlan = Payment.GetInstallmentPlanEntries(mortgage);
-            new InstallmentPlanWindow(_installmentPlan).Show();
+            new InstallmentPlanWindow(_installmentPlan, CultureInfo.CurrentCulture).Show();
         }
     }
 }

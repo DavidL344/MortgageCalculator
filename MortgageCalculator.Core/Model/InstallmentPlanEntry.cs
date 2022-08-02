@@ -1,6 +1,6 @@
 ﻿namespace MortgageCalculator.Core.Model
 {
-    public struct InstallmentPlanEntry
+    public class InstallmentPlanEntry
     {
         public int AlreadyPaid { get; internal set; }
         public decimal RecurringAmount { get; internal set; }

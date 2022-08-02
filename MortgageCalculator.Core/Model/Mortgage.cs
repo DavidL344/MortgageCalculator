@@ -20,7 +20,7 @@
         public int LoanTermYears { get; set; }
 
         /// <summary>
-        /// Indicates how often will a part of the debt be repayed
+        /// Indicates how often will a part of the debt be repaid
         /// </summary>
         /// <example>12 - monthly</example>
         public int InterestPaymentInterval { get; set; }

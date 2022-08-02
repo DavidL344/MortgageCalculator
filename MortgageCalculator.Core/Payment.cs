@@ -71,8 +71,13 @@ namespace MortgageCalculator.Core
             while (toRepay > 0)
             {
                 alreadyPaid++;
+                
                 decimal interest = i_m * toRepay;
-                decimal depreciation = recurringAmount - interest;
+                decimal depreciationCandidate = recurringAmount - interest;
+                decimal depreciation = depreciationCandidate > toRepay ? toRepay : depreciationCandidate;
+                
+                toRepay -= depreciation;
+                
                 installmentPlanEntries.Add(new InstallmentPlanEntry()
                 {
                     AlreadyPaid = alreadyPaid,
@@ -81,7 +86,6 @@ namespace MortgageCalculator.Core
                     Interest = Math.Round(interest, mortgage.Precision),
                     Depreciation = Math.Round(depreciation, mortgage.Precision)
                 });
-                toRepay -= depreciation;
             }
 
             return installmentPlanEntries;

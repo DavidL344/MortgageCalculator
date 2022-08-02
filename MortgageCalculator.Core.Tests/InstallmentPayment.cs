@@ -8,6 +8,7 @@ namespace MortgageCalculator.Core.Tests
     {
         [TestMethod]
         [DataRow(300000, 10, 10, 2, 2, 20)]
+        [DataRow(800000, 8, 6.9, 12, 2, 97)]
         public void CorrectNumberOfEntries(int homePrice, int loanTermYears, double interestRate,
             int interestPaymentInterval, int decimalPrecision, int expectedResult)
         {
@@ -20,7 +21,7 @@ namespace MortgageCalculator.Core.Tests
                 Precision = decimalPrecision
             };
             var installmentPlan = Payment.GetInstallmentPlan(mortgage);
-            Assert.IsTrue(expectedResult == installmentPlan.Length);
+            Assert.IsTrue(expectedResult == installmentPlan.Length, $"{expectedResult} != {installmentPlan.Length}");
         }
     }
 }

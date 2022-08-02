@@ -6,25 +6,21 @@ namespace MortgageCalculator.Core.Tests
     [TestClass]
     public class InstallmentPayment
     {
-        private readonly int _homePrice = 300000;
-        private readonly int _loanTermYears = 10;
-        private readonly int _interestRate = 10;
-        private readonly int _interestPaymentInterval = 2;
-        private readonly int _decimalPrecision = 2;
-
         [TestMethod]
-        public void CorrectNumberOfEntries()
+        [DataRow(300000, 10, 10, 2, 2, 20)]
+        public void CorrectNumberOfEntries(int homePrice, int loanTermYears, double interestRate,
+            int interestPaymentInterval, int decimalPrecision, int expectedResult)
         {
             Mortgage mortgage = new()
             {
-                HomePrice = _homePrice,
-                LoanTermYears = _loanTermYears,
-                InterestRate = _interestRate,
-                InterestPaymentInterval = _interestPaymentInterval,
-                Precision = _decimalPrecision
+                HomePrice = homePrice,
+                LoanTermYears = loanTermYears,
+                InterestRate = (decimal)interestRate,
+                InterestPaymentInterval = interestPaymentInterval,
+                Precision = decimalPrecision
             };
-            InstallmentPlan installmentPlan = Payment.GetInstallmentPlan(mortgage);
-            Assert.AreEqual(20, installmentPlan.Length);
+            var installmentPlan = Payment.GetInstallmentPlan(mortgage);
+            Assert.IsTrue(expectedResult == installmentPlan.Length);
         }
     }
 }
